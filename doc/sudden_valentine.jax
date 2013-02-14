@@ -1,0 +1,194 @@
+sudden_valentine.txt
+
+
+
+==============================================================================
+概要						*sudden_valentine-introduction*
+
+      ♥♥♥♥♥♥♥  ♥♥♥♥♥♥♥
+  ♥♥♥          ♥♥♥          ♥♥♥
+  ♥                ♥                ♥
+  ♥                ♥                ♥
+♥♥       突然のヴァレンタイン       ♥♥
+  ♥                                  ♥
+  ♥                                  ♥
+  ♥♥                              ♥♥
+    ♥♥                          ♥♥
+      ♥♥                      ♥♥
+        ♥♥♥              ♥♥♥
+            ♥♥          ♥♥
+              ♥♥♥  ♥♥♥
+                  ♥♥♥
+                    ♥
+
+
+
+==============================================================================
+使い方						*sudden_valentine-usage*
+
+>
+	:SuddenValentine vim
+	" 下のハートがカーソル上にペーストされる
+	"  ********** **********
+	" **        ***        **
+	"**          *          **
+	" *         vim         *
+	" **                   **
+	"  ***               ***
+	"    ***           ***
+	"      ****     ****
+	"         *** ***
+	"           ***
+<
+
+
+==============================================================================
+インターフェース				*sudden_valentine-interface*
+
+------------------------------------------------------------------------------
+コマンド					*sudden_valentine-commands*
+
+:SuddenValentine {text}				*:SuddenValentine*
+	{text} を中心としたハートを現在のカーソル上にペーシとします。
+	|strwidth|({text}) の長さが 13 未満であれば下記に記述されているサイズ
+	で固定。
+	13 以上であればその長さに応じてハートのサイズが大きくなります。
+	例: >
+		:SuddenValentine vim
+		" 下のハートがカーソル上にペーストされる
+		"  ********** **********
+		" **        ***        **
+		"**          *          **
+		" *         vim         *
+		" **                   **
+		"  ***               ***
+		"    ***           ***
+		"      ****     ****
+		"         *** ***
+		"           ***
+	<
+
+
+------------------------------------------------------------------------------
+関数						*sudden_valentine-functions*
+
+						*sudden_valentine#make()*
+sudden_valentine#make({text} [, {mark}])
+	{text} を中心としたハートの文字列のリストを返します。
+	を生成します。
+	{mark} には1文字の文字列が設定出来ます。
+	{mark} が設定された場合は枠が {mark} になります。
+	例: >
+		let heart = sudden_valentine#make_heart("vim")
+		echo join(heart, "\n")
+		"  ********** **********
+		" **        ***        **
+		"**          *          **
+		" *         vim         *
+		" *                     *
+		" **                   **
+		"  ***               ***
+		"    ***           ***
+		"      ****     ****
+		"         *** ***
+		"           ***
+
+		let heart = sudden_valentine#make_heart("vim", "#")
+		echo join(heart, "\n")
+		"   ########## ##########
+		"  ##        ###        ##
+		" ##          #          ##
+		"  #         vim         #
+		"  ##                   ##
+		"   ###               ###
+		"     ###           ###
+		"       ####     ####
+		"          ### ###
+		"            ###
+	<
+
+						*sudden_valentine#heart()*
+sudden_valentine#heart({width}, {height}, {mark} [, {fill}])
+	{width} と {height} に対応するハートを返す。
+	{width} と {height} は文字列の長さではないので注意。
+	側は {mark} で {fill} を渡せばそれで埋める。
+	{mark} と {fill} には1文字の文字列を渡せる
+	例: >
+		let heart = sudden_valentine#heart(12, 5, "*")
+		echo join(heart, "\n")
+		"   **********   **********
+		" ***        *****        ***
+		" *            *            *
+		"**                         **
+		" *                         *
+		" **                       **
+		"  **                     **
+		"   ***                 ***
+		"     ***             ***
+		"       ****       ****
+		"          **** ****
+		"             ***
+		"              *
+		"
+
+		let heart = sudden_valentine#heart(10, 5, "♥", "♡")
+		echo join(heart, "\n")
+		"
+		"      ♥♥♥♥♥♥♥  ♥♥♥♥♥♥♥
+		"  ♥♥♥♡♡♡♡♡♥♥♥♡♡♡♡♡♥♥♥
+		"  ♥♡♡♡♡♡♡♡♡♥♡♡♡♡♡♡♡♡♥
+		"  ♥♡♡♡♡♡♡♡♡♥♡♡♡♡♡♡♡♡♥
+		"♥♥♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♥♥
+		"  ♥♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♥
+		"  ♥♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♥
+		"  ♥♥♡♡♡♡♡♡♡♡♡♡♡♡♡♡♡♥♥
+		"    ♥♥♡♡♡♡♡♡♡♡♡♡♡♡♡♥♥
+		"      ♥♥♡♡♡♡♡♡♡♡♡♡♡♥♥
+		"        ♥♥♥♡♡♡♡♡♡♡♥♥♥
+		"            ♥♥♡♡♡♡♡♥♥
+		"              ♥♥♥♡♥♥♥
+		"                  ♥♥♥
+		"                    ♥
+		"
+	<
+
+
+==============================================================================
+設定						*sudden_valentine-setting*
+
+------------------------------------------------------------------------------
+変数						*sudden_valentine-variables*
+
+g:sudden_valentine_mark 			*g:sudden_valentine_mark*
+	|:SuddenValentine| した時に側に使われる文字列です。
+	1文字を設定することが出来ます。
+	Default: >
+		let g:sudden_valentine_mark = "*"
+	<
+
+g:sudden_valentine_fill 			*g:sudden_valentine_fill*
+	|:SuddenValentine| した時に内側を埋める文字列です。
+	1文字を設定することが出来ます。
+	Default: >
+		let g:sudden_valentine_fill = ""
+	<
+
+	Note: ワイド文字を設定すると中央に表示する文字の位置がずれます。
+
+g:sudden_valentine_size_width 			*g:sudden_valentine_size_width*
+	|:SuddenValentine| した時に使われるハートの横の倍率です
+
+	Default: >
+		let g:sudden_valentine_size_width = 1.0
+	<
+
+g:sudden_valentine_size_height 			*g:sudden_valentine_size_height*
+	|:SuddenValentine| した時に使われるハートの横の倍率です
+
+	Default: >
+		let g:sudden_valentine_size_height = 1.0
+	<
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
